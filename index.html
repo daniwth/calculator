@@ -3,32 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Avanzada</title>
     <link rel="stylesheet" href="styles.css">
+    <title>Calculadora Avanzada</title>
 </head>
 <body>
     <div class="calculator">
-        <input type="text" id="display" readonly>
+        <div class="display">
+            <input type="text" id="operation" readonly>
+            <input type="text" id="result" readonly>
+        </div>
         <div class="buttons">
-            <button class="number">7</button>
-            <button class="number">8</button>
-            <button class="number">9</button>
-            <button class="operator">+</button>
-            <button class="number">4</button>
-            <button class="number">5</button>
-            <button class="number">6</button>
-            <button class="operator">-</button>
-            <button class="number">1</button>
-            <button class="number">2</button>
-            <button class="number">3</button>
-            <button class="operator">*</button>
-            <button class="number">0</button>
-            <button class="operator">.</button>
-            <button class="calculate">=</button>
-            <button class="operator">/</button>
-            <button class="clear">C</button>
+            <div class="row">
+                <button class="number" onclick="appendNumber(7)">7</button>
+                <button class="number" onclick="appendNumber(8)">8</button>
+                <button class="number" onclick="appendNumber(9)">9</button>
+                <button class="operator" onclick="appendOperator('/')">/</button>
+            </div>
+            <div class="row">
+                <button class="number" onclick="appendNumber(4)">4</button>
+                <button class="number" onclick="appendNumber(5)">5</button>
+                <button class="number" onclick="appendNumber(6)">6</button>
+                <button class="operator" onclick="appendOperator('*')">*</button>
+            </div>
+            <div class="row">
+                <button class="number" onclick="appendNumber(1)">1</button>
+                <button class="number" onclick="appendNumber(2)">2</button>
+                <button class="number" onclick="appendNumber(3)">3</button>
+                <button class="operator" onclick="appendOperator('-')">-</button>
+            </div>
+            <div class="row">
+                <button class="number" onclick="appendNumber(0)">0</button>
+                <button class="operator" onclick="appendOperator('.')">.</button>
+                <button class="operator" onclick="calculate()">=</button>
+                <button class="operator" onclick="appendOperator('+')">+</button>
+            </div>
+            <div class="row">
+                <button class="clear" onclick="clearEntry()">C</button>
+                <button class="clear" onclick="clearCalculator()">CE</button>
+            </div>
         </div>
     </div>
+
     <script src="script.js"></script>
 </body>
 </html>
