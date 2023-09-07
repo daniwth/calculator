@@ -1,27 +1,22 @@
-let display = document.getElementById('display');
-let expression = '';
+// Lógica de la calculadora
+const display = document.getElementById('result');
+const buttons = document.querySelectorAll('.number, .operator, .equal');
 
-function appendCharacter(character) {
-  expression += character;
-  display.value = expression;
-}
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        if (button.classList.contains('equal')) {
+            calculate();
+        } else {
+            display.value += button.textContent;
+        }
+    });
+});
 
-function clearDisplay() {
-  expression = '';
-  display.value = '';
-}
-
-function deleteLastCharacter() {
-  expression = expression.slice(0, -1);
-  display.value = expression;
-}
-
-function calculateResult() {
-  try {
-    let result = eval(expression);
-    expression = result.toString();
-    display.value = expression;
-  } catch (error) {
-    display.value = 'Error';
-  }
+function calculate() {
+    try {
+        const result = eval(display.value);
+        display.value = result;
+    } catch (error) {
+        display.value = 'Error';
+    }
 }
