@@ -1,49 +1,79 @@
-// Variables
-let operationInput = document.getElementById('operation');
-let resultInput = document.getElementById('result');
-let clearEntryButton = document.getElementById('clear-entry');
-let clearAllButton = document.getElementById('clear-all');
-let equalsButton = document.getElementById('equals');
-let numberButtons = document.getElementsByClassName('number');
-let operatorButtons = document.getElementsByClassName('operator');
+let operando1 = '';
+let operando2 = '';
+let operador = '';
+let resultado = '';
 
-// Event Listeners
-for (let i = 0; i < numberButtons.length; i++) {
-    numberButtons[i].addEventListener('click', function() {
-        appendNumber(numberButtons[i].textContent);
-    });
+function agregarNumero(numero) {
+    if (operador === '') {
+        operando1 += numero;
+    } else {
+        operando2 += numero;
+    }
+    actualizarResultado();
 }
 
-for (let i = 0; i < operatorButtons.length; i++) {
-    operatorButtons[i].addEventListener('click', function() {
-        appendOperator(operatorButtons[i].textContent);
-    });
+function agregarOperador(op) {
+    if (operando1 !== '' && operando2 !== '') {
+        calcular();
+    }
+    operador = op;
 }
 
-clearEntryButton.addEventListener('click', clearEntry);
-clearAllButton.addEventListener('click', clearAll);
-equalsButton.addEventListener('click', calculate);
-
-// Functions
-function appendNumber(number) {
-    operationInput.value += number;
+function agregarDecimal() {
+    if (operador === '') {
+        if (!operando1.includes('.')) {
+            operando1 += '.';
+        }
+    } else {
+        if (!operando2.includes('.')) {
+            operando2 += '.';
+        }
+    }
+    actualizarResultado();
 }
 
-function appendOperator(operator) {
-    operationInput.value += operator;
+function calcular() {
+    const num1 = parseFloat(operando1);
+    const num2 = parseFloat(operando2);
+    switch (operador) {
+        case '+':
+            resultado = num1 + num2;
+            break;
+        case '-':
+            resultado = num1 - num2;
+            break;
+        case '*':
+            resultado = num1 * num2;
+            break;
+        case '/':
+            resultado = num1 / num2;
+            break;
+        default:
+            break;
+    }
+    operando1 = resultado.toString();
+    operando2 = '';
+    operador = '';
+    actualizarResultado();
 }
 
-function clearEntry() {
-    operationInput.value = operationInput.value.slice(0, -1);
+function limpiar() {
+    operando1 = '';
+    operando2 = '';
+    operador = '';
+    resultado = '';
+    actualizarResultado();
 }
 
-function clearAll() {
-    operationInput.value = '';
-    resultInput.value = '';
+function borrar() {
+    if (operador === '') {
+        operando1 = operando1.slice(0, -1);
+    } else {
+        operando2 = operando2.slice(0, -1);
+    }
+    actualizarResultado();
 }
 
-function calculate() {
-    let operation = operationInput.value;
-    let result = eval(operation);
-    resultInput.value = result;
+function actualizarResultado() {
+    document.getElementById('resultado').value = operando1 + operador + operando2;
 }
