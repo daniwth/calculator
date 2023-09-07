@@ -50,16 +50,19 @@ button:hover {
 }
 
 footer {
-  margin-top: 20px;
-  text-align: center;
-}
+    background-color: #f2f2f2;
+    padding: 20px;
+    text-align: center;
+  }
 
-footer a {
-  margin-right: 10px;
-  color: #333;
-  text-decoration: none;
-}
+  .footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-footer a:hover {
-  text-decoration: underline;
-}
+  .footer-content a {
+    margin: 0 10px;
+    color: #333;
+    text-decoration: none;
+  }
