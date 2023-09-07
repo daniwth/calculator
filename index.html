@@ -1,49 +1,48 @@
+
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <title>Calculadora Avanzada</title>
 </head>
+
 <body>
-    <div class="calculator">
-        <div class="display">
-            <input type="text" id="operation" readonly>
-            <input type="text" id="result" readonly>
+    <div id="calculadora">
+        <input type="text" id="resultado" readonly>
+        <div>
+            <button onclick="limpiar()">C</button>
+            <button onclick="borrar()">CE</button>
+            <button onclick="agregarNumero(7)">7</button>
+            <button onclick="agregarNumero(8)">8</button>
+            <button onclick="agregarNumero(9)">9</button>
+            <button onclick="agregarOperador('+')">+</button>
         </div>
-        <div class="buttons">
-            <div class="row">
-                <button class="number">7</button>
-                <button class="number">8</button>
-                <button class="number">9</button>
-                <button class="operator">/</button>
-            </div>
-            <div class="row">
-                <button class="number">4</button>
-                <button class="number">5</button>
-                <button class="number">6</button>
-                <button class="operator">*</button>
-            </div>
-            <div class="row">
-                <button class="number">1</button>
-                <button class="number">2</button>
-                <button class="number">3</button>
-                <button class="operator">-</button>
-            </div>
-            <div class="row">
-                <button class="number">0</button>
-                <button class="operator">.</button>
-                <button class="operator">+</button>
-            </div>
-            <div class="row">
-                <button id="clear-entry">C</button>
-                <button id="clear-all">CE</button>
-                <button id="equals">=</button>
-            </div>
+        <div>
+            <button onclick="agregarNumero(4)">4</button>
+            <button onclick="agregarNumero(5)">5</button>
+            <button onclick="agregarNumero(6)">6</button>
+            <button onclick="agregarOperador('-')">-</button>
+        </div>
+        <div>
+            <button onclick="agregarNumero(1)">1</button>
+            <button onclick="agregarNumero(2)">2</button>
+            <button onclick="agregarNumero(3)">3</button>
+            <button onclick="agregarOperador('*')">*</button>
+        </div>
+        <div>
+            <button onclick="agregarNumero(0)">0</button>
+            <button onclick="agregarDecimal()">.</button>
+            <button onclick="calcular()">=</button>
+            <button onclick="agregarOperador('/')">/</button>
         </div>
     </div>
-
+    <footer>
+        <a href="https://daniwth.me">daniwth.me</a>
+        <a href="https://daniwth.me/license">license</a>
+    </footer>
     <script src="script.js"></script>
 </body>
+
 </html>
