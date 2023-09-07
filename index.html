@@ -1,48 +1,42 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Avanzada</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora Avanzada</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <div id="calculadora">
-        <input type="text" id="resultado" readonly>
-        <div>
-            <button onclick="limpiar()">C</button>
-            <button onclick="borrar()">CE</button>
-            <button onclick="agregarNumero(7)">7</button>
-            <button onclick="agregarNumero(8)">8</button>
-            <button onclick="agregarNumero(9)">9</button>
-            <button onclick="agregarOperador('+')">+</button>
-        </div>
-        <div>
-            <button onclick="agregarNumero(4)">4</button>
-            <button onclick="agregarNumero(5)">5</button>
-            <button onclick="agregarNumero(6)">6</button>
-            <button onclick="agregarOperador('-')">-</button>
-        </div>
-        <div>
-            <button onclick="agregarNumero(1)">1</button>
-            <button onclick="agregarNumero(2)">2</button>
-            <button onclick="agregarNumero(3)">3</button>
-            <button onclick="agregarOperador('*')">*</button>
-        </div>
-        <div>
-            <button onclick="agregarNumero(0)">0</button>
-            <button onclick="agregarDecimal()">.</button>
-            <button onclick="calcular()">=</button>
-            <button onclick="agregarOperador('/')">/</button>
-        </div>
+  <div class="calculator">
+    <input type="text" id="display" readonly>
+    <div class="buttons">
+      <button onclick="clearDisplay()">C</button>
+      <button onclick="deleteLastCharacter()">&larr;</button>
+      <button onclick="appendCharacter('/')">/</button>
+      <button onclick="appendCharacter('7')">7</button>
+      <button onclick="appendCharacter('8')">8</button>
+      <button onclick="appendCharacter('9')">9</button>
+      <button onclick="appendCharacter('*')">*</button>
+      <button onclick="appendCharacter('4')">4</button>
+      <button onclick="appendCharacter('5')">5</button>
+      <button onclick="appendCharacter('6')">6</button>
+      <button onclick="appendCharacter('-')">-</button>
+      <button onclick="appendCharacter('1')">1</button>
+      <button onclick="appendCharacter('2')">2</button>
+      <button onclick="appendCharacter('3')">3</button>
+      <button onclick="appendCharacter('+')">+</button>
+      <button onclick="appendCharacter('0')">0</button>
+      <button onclick="appendCharacter('.')">.</button>
+      <button onclick="calculateResult()">=</button>
     </div>
-    <footer>
-        <a href="https://daniwth.me">daniwth.me</a>
-        <a href="https://daniwth.me/license">license</a>
-    </footer>
-    <script src="script.js"></script>
+  </div>
+  <footer>
+    <a href="https://daniwth.me">daniwth.me</a>
+    <a href="https://daniwth.me/license">license</a>
+  </footer>
+  <script src="script.js"></script>
 </body>
 
 </html>
