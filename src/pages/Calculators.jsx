@@ -1,73 +1,87 @@
-import { useState } from 'react'
-import { Search, SlidersHorizontal } from 'lucide-react'
-import { CALCULATORS, CALCULATOR_CATEGORIES } from '../lib/calculators'
-import CalculatorCard from '../components/calculators/CalculatorCard'
-import { cn } from '../lib/utils'
+import { useParams, Link, Navigate } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
+import { getCalculatorBySlug } from '../../lib/calculators'
+import PremiumGate from '../../components/calculators/PremiumGate'
+import { useAuth } from '../../context/AuthContext'
+import { cn } from '../../lib/utils'
 
-export default function Calculators() {
-  const [search, setSearch] = useState('')
-  const [category, setCategory] = useState('all')
-  const [tierFilter, setTierFilter] = useState('all')
+import BasicCalculator from './BasicCalculator'
+import PercentageCalculator from './PercentageCalculator'
+import TipCalculator from './TipCalculator'
+import DiscountCalculator from './DiscountCalculator'
 
-  const filtered = CALCULATORS.filter(calc => {
-    const matchSearch = search === '' ||
-      calc.nombre.toLowerCase().includes(search.toLowerCase()) ||
-      calc.descripcion.toLowerCase().includes(search.toLowerCase()) ||
-      calc.tags.some(t => t.toLowerCase().includes(search.toLowerCase()))
-    const matchCat = category === 'all' || calc.categoria === category
-    const matchTier = tierFilter === 'all' || calc.tier === tierFilter
-    return matchSearch && matchCat && matchTier
-  })
+// TODO: añadir cuando se creen los archivos
+// import ScientificCalculator from './ScientificCalculator'
+// import UnitConverter from './UnitConverter'
+// import BMICalculator from './BMICalculator'
+// import MortgageCalculator from './MortgageCalculator'
+// import LoanCalculator from './LoanCalculator'
+// import CompoundInterestCalculator from './CompoundInterestCalculator'
+// import CurrencyCalculator from './CurrencyCalculator'
+// import StatisticsCalculator from './StatisticsCalculator'
+// import MatrixCalculator from './MatrixCalculator'
+// import ProgrammerCalculator from './ProgrammerCalculator'
+// import DateCalculator from './DateCalculator'
+// import GeometryCalculator from './GeometryCalculator'
+// import FuelCalculator from './FuelCalculator'
+// import CalorieCalculator from './CalorieCalculator'
+// import IRPFCalculator from './IRPFCalculator'
+// import FinancialCalculator from './FinancialCalculator'
+
+const COMPONENTS = {
+  basica: BasicCalculator,
+  porcentajes: PercentageCalculator,
+  propinas: TipCalculator,
+  descuentos: DiscountCalculator,
+}
+
+export default function CalculatorPage() {
+  const { slug } = useParams()
+  const calc = getCalculatorBySlug(slug)
+  const { isPremium } = useAuth()
+
+  if (!calc) return <Navigate to="/calculadoras" replace />
+  const Component = COMPONENTS[slug]
+  if (!Component) return <Navigate to="/calculadoras" replace />
+
+  const isPremiumCalc = calc.tier === 'premium'
+  const isLocked = isPremiumCalc && !isPremium
 
   return (
-    <div className="min-h-screen pt-24 pb-20 px-4">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-10">
-          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">Todas las calculadoras</h1>
-          <p className="text-gray-400">{CALCULATORS.length} calculadoras disponibles</p>
+    <div className="min-h-screen pt-20 pb-16 px-4">
+      <div className="max-w-2xl mx-auto">
+        <Link to="/calculadoras" className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-300 mb-6 transition-colors">
+          <ArrowLeft className="w-4 h-4" />Todas las calculadoras
+        </Link>
+
+        <div className="flex items-start justify-between mb-6">
+          <div className="flex items-start gap-4">
+            <div className={cn('w-14 h-14 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0',
+              isPremiumCalc ? 'bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-500/20'
+              : 'bg-gradient-to-br from-primary-500/20 to-violet-500/20 border border-primary-500/20'
+            )}>{calc.icon}</div>
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <h1 className="text-2xl font-bold text-white">{calc.nombre}</h1>
+                {isPremiumCalc ? <span className="premium-badge">PRO</span> : <span className="free-badge">GRATIS</span>}
+              </div>
+              <p className="text-gray-400 text-sm leading-relaxed">{calc.descripcion}</p>
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {calc.tags.slice(0, 4).map(tag => (
+                  <span key={tag} className="px-2 py-0.5 rounded-full text-xs bg-gray-800 text-gray-500">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 mb-8">
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-            <input type="text" value={search} onChange={e => setSearch(e.target.value)}
-              placeholder="Buscar calculadora..." className="input-field w-full pl-10" />
-          </div>
-          <div className="flex items-center gap-2">
-            <SlidersHorizontal className="w-4 h-4 text-gray-500" />
-            {[{ id: 'all', label: 'Todas' }, { id: 'free', label: 'Gratis' }, { id: 'premium', label: 'Premium' }].map(opt => (
-              <button key={opt.id} onClick={() => setTierFilter(opt.id)}
-                className={cn('px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
-                  tierFilter === opt.id ? 'bg-primary-500/20 text-primary-400 border border-primary-500/30' : 'text-gray-500 hover:text-gray-300 border border-gray-800 hover:border-gray-700'
-                )}>{opt.label}</button>
-            ))}
-          </div>
+        <div className="bg-gray-900/50 rounded-2xl border border-gray-800 p-6">
+          {isLocked ? (
+            <PremiumGate calculatorName={calc.nombre}><Component /></PremiumGate>
+          ) : (
+            <Component />
+          )}
         </div>
-
-        <div className="flex flex-wrap gap-2 mb-8">
-          {CALCULATOR_CATEGORIES.map(cat => (
-            <button key={cat.id} onClick={() => setCategory(cat.id)}
-              className={cn('px-3 py-1.5 rounded-full text-sm font-medium transition-colors',
-                category === cat.id ? 'bg-primary-500 text-white' : 'bg-gray-800 text-gray-400 hover:text-white hover:bg-gray-700'
-              )}>{cat.label}</button>
-          ))}
-        </div>
-
-        {(search || category !== 'all' || tierFilter !== 'all') && (
-          <p className="text-sm text-gray-500 mb-4">{filtered.length} resultado{filtered.length !== 1 ? 's' : ''}</p>
-        )}
-
-        {filtered.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {filtered.map(calc => <CalculatorCard key={calc.slug} calculator={calc} />)}
-          </div>
-        ) : (
-          <div className="text-center py-20">
-            <div className="text-5xl mb-4">🔍</div>
-            <h3 className="text-lg font-semibold text-white mb-2">Sin resultados</h3>
-            <p className="text-gray-500 text-sm">No encontramos calculadoras con ese criterio. Prueba con otra búsqueda.</p>
-          </div>
-        )}
       </div>
     </div>
   )
