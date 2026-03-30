@@ -1,36 +1,18 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Calculadora</title>
-</head>
-<body>
-  <div class="calculator">
-    <div class="display">
-      <input type="text" id="result" readonly>
-    </div>
-    <div class="buttons">
-      <!-- Existing buttons -->
-      <!-- ... -->
-      <button class="operator">/</button>
-      <button class="clear">C</button>
-      <button class="reset">CE</button>
-      <button class="equal">=</button>
-      <!-- Scientific buttons -->
-      <button class="scientific">sin</button>
-      <button class="scientific">cos</button>
-      <button class="scientific">tan</button>
-      <button class="scientific">log</button>
-    </div>
-  </div>
-  <footer>
-    <div class="footer-content">
-      <a href="https://daniwth.me">daniwth.me</a>
-      <a href="https://daniwth.me/license">License</a>
-    </div>
-  </footer>
-  <script src="script.js"></script>
-</body>
+<html lang="es" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/calc-icon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="CalcPro - La plataforma de calculadoras más completa. Más de 20 tipos de calculadoras profesionales gratuitas y premium." />
+    <meta name="keywords" content="calculadora, calculadora científica, calculadora financiera, IMC, hipoteca, divisas" />
+    <title>CalcPro — Calculadoras Profesionales</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
